@@ -455,8 +455,8 @@ CREATE TABLE `x_message_service_send_record`  (
 -- ----------------------------
 -- Table structure for x_message_service_send_record_2025_08
 -- ----------------------------
-DROP TABLE IF EXISTS `x_message_service_send_record_2025_08`;
-CREATE TABLE `x_message_service_send_record_2025_08`  (
+DROP TABLE IF EXISTS `x_message_service_send_record_2026_04`;
+CREATE TABLE `x_message_service_send_record_2026_04`  (
   `record_id` int NOT NULL AUTO_INCREMENT COMMENT '记录ID',
   `record_year` int NULL DEFAULT NULL COMMENT '年',
   `record_month` int NULL DEFAULT NULL COMMENT '月',
@@ -506,6 +506,33 @@ CREATE TABLE `x_message_service_template_config`  (
   `template_id` int NOT NULL COMMENT '模板ID',
   PRIMARY KEY (`service_id`, `template_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '短信模板配置' ROW_FORMAT = Dynamic;
+
+
+
+-- ----------------------------
+-- Table structure for short_link
+-- ----------------------------
+DROP TABLE IF EXISTS `short_link`;
+CREATE TABLE `short_link` (
+                              `link_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '短链ID',
+                              `original_url` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '原始长链接',
+                              `short_code` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '短链码',
+                              `short_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '完整短链接',
+                              `tenancy_id` bigint DEFAULT NULL COMMENT '租户ID',
+                              `visit_count` int DEFAULT '0' COMMENT '访问次数',
+                              `status` tinyint DEFAULT '1' COMMENT '状态 0-禁用 1-启用',
+                              `expire_time` datetime DEFAULT NULL COMMENT '过期时间',
+                              `user_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '创建用户ID',
+                              `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `update_time` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                              `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+                              PRIMARY KEY (`link_id`) USING BTREE,
+                              UNIQUE KEY `uk_short_code` (`short_code`) USING BTREE COMMENT '短链码唯一索引',
+                              KEY `idx_original_url` (`original_url`(255)) USING BTREE COMMENT '原始URL索引',
+                              KEY `idx_tenancy_id` (`tenancy_id`) USING BTREE COMMENT '租户ID索引',
+                              KEY `idx_user_id` (`user_id`) USING BTREE COMMENT '用户ID索引',
+                              KEY `idx_create_time` (`create_time`) USING BTREE COMMENT '创建时间索引'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='短链管理';
 
 -- ----------------------------
 -- Records of x_message_service_template_config

@@ -20,8 +20,8 @@ import java.util.Date;
 /**
  * 系统用户
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2016年9月18日 上午9:46:09
  */
 @Service

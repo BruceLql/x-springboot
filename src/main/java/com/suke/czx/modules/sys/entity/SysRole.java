@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * 角色
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @Data
 @Schema(description = "角色")

@@ -26,8 +26,8 @@ import java.util.Map;
 /**
  * 角色管理
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @RestController
 @RequestMapping("/sys/role")

@@ -7,8 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * IP地址
  * 
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2017年3月8日 下午12:57:02
  */
 @Slf4j

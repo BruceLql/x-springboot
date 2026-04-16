@@ -43,8 +43,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * 登录相关
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @Slf4j
 @RestController

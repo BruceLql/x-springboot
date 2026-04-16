@@ -7,8 +7,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 /**
  * 短信模板
  * 
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2025-08-15 17:48:07
  */
 public interface XMessageServiceTemplateService extends IService<XMessageServiceTemplate> {

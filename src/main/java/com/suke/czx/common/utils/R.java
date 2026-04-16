@@ -3,7 +3,7 @@ package com.suke.czx.common.utils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class R extends HashMap<String,Object> {
+public class R extends HashMap<String, Object> {
     public R() {
         this.put("code", 0);
         this.put("msg", "success");
@@ -48,6 +48,11 @@ public class R extends HashMap<String,Object> {
 
     public R setPage(Object value) {
         super.put("page", value);
+        return this;
+    }
+
+    public R setMsg(String msg) {
+        super.put("msg", msg);
         return this;
     }
 

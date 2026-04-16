@@ -6,8 +6,8 @@ import com.suke.czx.modules.param.entity.TbParam;
 /**
  * 参数管理
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2023-04-03 09:19:41
  */
 public interface TbParamMapper extends BaseMapper<TbParam> {

@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author czx
+ * @author lql
  * @title: SendMessageComponent
  * @projectName task-manage
  * @description: https://market.aliyun.com/apimarket/detail/cmapi029993

@@ -12,8 +12,8 @@ import java.util.Map;
 /**
  * Spring Context 工具类
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2016年11月29日 下午11:45:51
  */
 @Component

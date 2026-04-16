@@ -20,8 +20,8 @@ import java.util.Map;
 /**
  * 文件上传
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2017-03-25 12:13:26
  */
 @Slf4j

@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * 角色
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2016年9月18日 上午9:42:52
  */
 public interface SysRoleService extends IService<SysRole> {

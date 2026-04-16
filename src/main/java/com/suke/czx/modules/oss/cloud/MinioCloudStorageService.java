@@ -11,7 +11,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 /**
- * @Author czx
+ * @author lql
  * @Description minio 文件存储 具体其他操作看官网 https://docs.min.io/
  **/
 @Slf4j

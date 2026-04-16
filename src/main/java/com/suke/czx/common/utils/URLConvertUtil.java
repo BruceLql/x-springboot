@@ -1,7 +1,7 @@
 package com.suke.czx.common.utils;
 
 /**
- * @author czx
+ * @author lql
  * @title: URLConvertUtil
  * @projectName zhjg
  * @description: rest url 转驼峰

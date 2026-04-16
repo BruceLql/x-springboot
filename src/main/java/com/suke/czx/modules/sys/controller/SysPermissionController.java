@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 /**
  * 接口权限管理
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2023-05-17 14:48:21
  */
 @Slf4j

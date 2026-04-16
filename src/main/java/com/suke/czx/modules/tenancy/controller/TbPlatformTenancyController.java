@@ -21,8 +21,8 @@ import java.util.Map;
 /**
  * 渠道管理
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2024-11-29 14:48:31
  */
 @RestController

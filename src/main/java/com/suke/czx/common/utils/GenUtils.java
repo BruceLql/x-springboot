@@ -27,8 +27,8 @@ import java.util.*;
 /**
  * 代码生成器   工具类
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @Slf4j
 @Component

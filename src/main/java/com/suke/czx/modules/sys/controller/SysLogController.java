@@ -23,8 +23,8 @@ import java.util.Map;
 /**
  * 系统日志
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @RestController
 @AllArgsConstructor

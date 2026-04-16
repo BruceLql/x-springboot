@@ -19,8 +19,8 @@ import java.util.List;
 /**
  * 短信服务
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2025-08-15 17:51:27
  */
 @Service

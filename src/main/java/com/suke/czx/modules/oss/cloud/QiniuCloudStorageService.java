@@ -16,8 +16,8 @@ import java.io.InputStream;
 /**
  * 七牛云存储
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2017-03-25 15:41
  */
 @Slf4j

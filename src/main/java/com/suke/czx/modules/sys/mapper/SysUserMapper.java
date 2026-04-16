@@ -6,8 +6,8 @@ import com.suke.czx.modules.sys.entity.SysUser;
 /**
  * 系统用户
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2016年9月18日 上午9:34:11
  */
 public interface SysUserMapper extends BaseMapper<SysUser> {

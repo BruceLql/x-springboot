@@ -3,7 +3,7 @@ package com.suke.czx.modules.gen.entity;
 import lombok.Data;
 
 /**
- * @author czx
+ * @author lql
  * @title: MakerConfigEntity
  * @projectName zhjg
  * @description:

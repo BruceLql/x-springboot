@@ -7,8 +7,8 @@ import java.util.List;
 /**
  * 表数据
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2016年12月20日 上午12:02:55
  */
 @Data

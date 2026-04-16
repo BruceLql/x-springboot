@@ -6,8 +6,8 @@ import com.suke.czx.modules.sys.entity.SysUserRole;
 /**
  * 用户与角色对应关系
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2016年9月18日 上午9:34:46
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {

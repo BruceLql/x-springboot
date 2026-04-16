@@ -13,8 +13,8 @@ import java.io.Serializable;
 /**
  * 应用服务
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2025-08-15 16:34:08
  */
 @Data

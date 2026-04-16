@@ -10,8 +10,8 @@ import java.io.Serializable;
 /**
  * 用户与角色对应关系
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @Data
 @Schema(description = "用户与角色对应关系")

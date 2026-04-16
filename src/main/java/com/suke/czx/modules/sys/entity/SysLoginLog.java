@@ -13,8 +13,8 @@ import java.util.Date;
 /**
  * 登录日志
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @Data
 @Schema(description = "登录日志")

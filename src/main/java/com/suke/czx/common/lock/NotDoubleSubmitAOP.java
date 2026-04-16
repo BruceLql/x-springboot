@@ -17,7 +17,6 @@ import org.springframework.util.DigestUtils;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 防重复提交注解的实现，使用AOP。
@@ -44,7 +43,7 @@ public class NotDoubleSubmitAOP {
         final String lockKey = Constant.SYSTEM_NAME + generateKey(pjp, CharSequenceUtil.isEmpty(token) ? UUID.randomUUID().toString() : token);
 
         // 上锁
-        final boolean success = redissonLock.lock(lockKey, notDoubleSubmit.delaySeconds(), TimeUnit.SECONDS);
+        final boolean success = redissonLock.lock(lockKey, notDoubleSubmit.delaySeconds(), 20);
         if (!success) {
             // 这里也可以改为自己项目自定义的异常抛出
             return R.error("操作太频繁");

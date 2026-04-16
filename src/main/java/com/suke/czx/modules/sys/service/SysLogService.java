@@ -6,8 +6,8 @@ import com.suke.czx.modules.sys.entity.SysLog;
 /**
  * 系统日志
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2017-03-08 10:40:56
  */
 public interface SysLogService extends IService<SysLog> {

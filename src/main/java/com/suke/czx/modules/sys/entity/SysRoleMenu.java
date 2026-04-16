@@ -12,8 +12,8 @@ import java.io.Serializable;
 /**
  * 角色与菜单对应关系
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 @Data
 @TableName("sys_role_menu")

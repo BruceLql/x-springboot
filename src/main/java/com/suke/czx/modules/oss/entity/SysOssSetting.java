@@ -16,8 +16,8 @@ import java.util.Date;
 /**
  * 文件上传配置
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2024-12-02 09:34:46
  */
 @Data

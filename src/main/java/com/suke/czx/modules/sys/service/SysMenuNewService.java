@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * 菜单管理
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  */
 public interface SysMenuNewService extends IService<SysMenuNew> {
 

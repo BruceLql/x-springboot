@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 /**
  * 文件上传Factory
  *
- * @author czx
- * @email object_czx@163.com
+ * @author lql
+ * @email  
  * @date 2017-03-26 10:18
  */
 @Component

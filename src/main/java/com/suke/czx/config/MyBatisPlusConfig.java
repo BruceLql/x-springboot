@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @Configuration
 @EnableTransactionManagement
-@MapperScan(value = {"com.suke.czx.modules.*.mapper", "com.suke.czx.modules.*.infrastructure.repository"})
 public class MyBatisPlusConfig {
 
     @Resource

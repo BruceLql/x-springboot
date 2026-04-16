@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableAsync
 @EnableScheduling
 @SpringBootApplication
-@MapperScan("com.suke.czx.modules.**.mapper")
+@MapperScan({"com.suke.czx.modules.**.mapper", "com.suke.czx.modules.**.infrastructure.repository"})
 public class Application {
 
     public static void main(String[] args) {

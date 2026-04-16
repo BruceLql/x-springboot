@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.warehouse.inventory.infrastructure.repository.GoodsInventoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suke.czx.modules.warehouse.inventory.domain.entity.GoodsInventory">
+        <id column="inventory_id" property="inventoryId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="real_quantity" property="realQuantity"/>
+        <result column="withhold_quantity" property="withholdQuantity"/>
+        <result column="occupy_quantity" property="occupyQuantity"/>
+        <result column="sellable_quantity" property="sellableQuantity"/>
+        <result column="version" property="version"/>
+        <result column="tenancy_id" property="tenancyId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 根据货物ID查询库存 -->
+    <select id="selectByGoodsId" resultMap="BaseResultMap">
+        SELECT *
+        FROM wms_goods_inventory
+        WHERE goods_id = #{goodsId}
+    </select>
+
+    <!-- 增加实际库存（入库） -->
+    <update id="increaseRealQuantity">
+        UPDATE wms_goods_inventory
+        SET real_quantity = real_quantity + #{quantity},
+            sellable_quantity = sellable_quantity + #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+    </update>
+
+    <!-- 锁定库存（组商品） -->
+    <update id="withholdQuantity">
+        UPDATE wms_goods_inventory
+        SET withhold_quantity = withhold_quantity + #{quantity},
+            sellable_quantity = sellable_quantity - #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+          AND real_quantity >= withhold_quantity + occupy_quantity + #{quantity}
+    </update>
+
+    <!-- 释放锁定库存 -->
+    <update id="releaseWithhold">
+        UPDATE wms_goods_inventory
+        SET withhold_quantity = withhold_quantity - #{quantity},
+            sellable_quantity = sellable_quantity + #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+          AND withhold_quantity >= #{quantity}
+    </update>
+
+    <!-- 占用库存（布款完成） -->
+    <update id="occupyQuantity">
+        UPDATE wms_goods_inventory
+        SET withhold_quantity = withhold_quantity - #{quantity},
+            occupy_quantity = occupy_quantity + #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+          AND withhold_quantity >= #{quantity}
+    </update>
+
+    <!-- 取消占用库存 -->
+    <update id="cancelOccupy">
+        UPDATE wms_goods_inventory
+        SET occupy_quantity = occupy_quantity - #{quantity},
+            real_quantity = real_quantity + #{quantity},
+            sellable_quantity = sellable_quantity + #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+          AND occupy_quantity >= #{quantity}
+    </update>
+
+    <!-- 确认出库（扣减实际和占用库存） -->
+    <update id="confirmOutbound">
+        UPDATE wms_goods_inventory
+        SET real_quantity = real_quantity - #{quantity},
+            occupy_quantity = occupy_quantity - #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+          AND real_quantity >= #{quantity}
+          AND occupy_quantity >= #{quantity}
+    </update>
+
+    <!-- 报损出库（直接扣减实际库存） -->
+    <update id="damageOutbound">
+        UPDATE wms_goods_inventory
+        SET real_quantity = real_quantity - #{quantity},
+            sellable_quantity = sellable_quantity - #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE goods_id = #{goodsId} AND version = #{version}
+          AND real_quantity >= #{quantity}
+    </update>
+
+</mapper>

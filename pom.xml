@@ -167,17 +167,6 @@
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.14.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                    <release>21</release>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
@@ -188,6 +177,8 @@
                 <configuration>
                     <source>21</source> <!-- 对应您的 JDK 版本 -->
                     <target>21</target>
+                    <release>21</release>
+                    <encoding>UTF-8</encoding>
                     <annotationProcessorPaths>
                         <!-- Lombok 必须放在 MapStruct 之前 -->
                         <path>

@@ -3,6 +3,7 @@ package com.suke.czx.config;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.suke.czx.common.shardingtable.ShardingTableConfig;
 import jakarta.annotation.Resource;
@@ -21,7 +22,7 @@ public class MyBatisPlusConfig {
     public ShardingTableConfig shardingTableHandler;
 
     /**
-     * 添加分页插件
+     * 添加分页插件和乐观锁插件
      */
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -30,6 +31,8 @@ public class MyBatisPlusConfig {
         // 动态表名插件
         DynamicTableNameInnerInterceptor dynamicTableNameInterceptor = new DynamicTableNameInnerInterceptor(shardingTableHandler);
         interceptor.addInnerInterceptor(dynamicTableNameInterceptor);
+        // 乐观锁插件
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         // 分页插件
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL)); // 如果配置多个插件, 切记分页最后添加
         return interceptor;

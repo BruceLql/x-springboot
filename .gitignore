@@ -1,0 +1,14 @@
+.idea
+target
+
+.env
+.env.properties
+META-INF/
+*.log
+
+# IDE
+*.iml
+.vscode/
+
+# OS
+.DS_Store

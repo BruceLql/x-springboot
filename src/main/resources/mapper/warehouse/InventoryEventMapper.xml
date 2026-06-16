@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.warehouse.inventory.infrastructure.repository.InventoryEventMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suke.czx.modules.warehouse.inventory.domain.entity.InventoryEvent">
+        <id column="event_id" property="eventId"/>
+        <result column="idempotent_key" property="idempotentKey"/>
+        <result column="business_type" property="businessType"/>
+        <result column="source_type" property="sourceType"/>
+        <result column="source_id" property="sourceId"/>
+        <result column="event_type" property="eventType"/>
+        <result column="change_real" property="changeReal"/>
+        <result column="change_withhold" property="changeWithhold"/>
+        <result column="change_occupy" property="changeOccupy"/>
+        <result column="change_sellable" property="changeSellable"/>
+        <result column="before_real" property="beforeReal"/>
+        <result column="before_withhold" property="beforeWithhold"/>
+        <result column="before_occupy" property="beforeOccupy"/>
+        <result column="before_sellable" property="beforeSellable"/>
+        <result column="after_real" property="afterReal"/>
+        <result column="after_withhold" property="afterWithhold"/>
+        <result column="after_occupy" property="afterOccupy"/>
+        <result column="after_sellable" property="afterSellable"/>
+        <result column="related_order_no" property="relatedOrderNo"/>
+        <result column="operator_id" property="operatorId"/>
+        <result column="tenancy_id" property="tenancyId"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 根据幂等键查询事件 -->
+    <select id="selectByIdempotentKey" resultMap="BaseResultMap">
+        SELECT *
+        FROM wms_inventory_event
+        WHERE idempotent_key = #{idempotentKey}
+        LIMIT 1
+    </select>
+
+</mapper>

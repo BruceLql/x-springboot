@@ -1,0 +1,32 @@
+spring:
+  # 数据源配置
+  datasource:
+    # MySQL 主数据源（前缀对应 MysqlDataSourceConfig 的 @ConfigurationProperties）
+    mysql:
+      type: com.zaxxer.hikari.HikariDataSource
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/x_springboot?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+      username: root
+      password: ${MYSQL_PASSWORD:}
+      hikari:
+        minimum-idle: 5
+        maximum-pool-size: 20
+        connection-timeout: 30000
+        idle-timeout: 600000
+        max-lifetime: 1800000
+        validation-timeout: 5000
+
+    # PostgreSQL 次要数据源（前缀对应 PostgreSqlDataSourceConfig 的 @ConfigurationProperties）
+    pg:
+      enabled: true
+      type: com.zaxxer.hikari.HikariDataSource
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://localhost:5432/x_springboot_ai
+      username: postgres
+      password: ${PGVECTOR_PASSWORD:}
+      hikari:
+        minimum-idle: 2
+        maximum-pool-size: 10
+        connection-timeout: 30000
+        idle-timeout: 300000
+        max-lifetime: 600000

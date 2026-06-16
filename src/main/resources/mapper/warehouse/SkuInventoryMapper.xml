@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.warehouse.inventory.infrastructure.repository.SkuInventoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suke.czx.modules.warehouse.inventory.domain.entity.SkuInventory">
+        <id column="inventory_id" property="inventoryId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="real_quantity" property="realQuantity"/>
+        <result column="withhold_quantity" property="withholdQuantity"/>
+        <result column="occupy_quantity" property="occupyQuantity"/>
+        <result column="sellable_quantity" property="sellableQuantity"/>
+        <result column="version" property="version"/>
+        <result column="tenancy_id" property="tenancyId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- SKU库存VO查询映射结果（关联SKU定义信息） -->
+    <resultMap id="SkuInventoryVOResultMap" type="com.suke.czx.modules.warehouse.inventory.interfaces.vo.SkuInventoryVO">
+        <id column="inventory_id" property="inventoryId"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="sku_name" property="skuName"/>
+        <result column="sku_image" property="skuImage"/>
+        <result column="pre_allocate_quantity" property="preAllocateQuantity"/>
+        <result column="status" property="status"/>
+        <result column="real_quantity" property="realQuantity"/>
+        <result column="withhold_quantity" property="withholdQuantity"/>
+        <result column="occupy_quantity" property="occupyQuantity"/>
+        <result column="sellable_quantity" property="sellableQuantity"/>
+        <result column="version" property="version"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 分页查询SKU库存（关联SKU定义信息） -->
+    <select id="selectSkuInventoryPage" resultMap="SkuInventoryVOResultMap">
+        SELECT
+            i.inventory_id,
+            i.sku_id,
+            i.real_quantity,
+            i.withhold_quantity,
+            i.occupy_quantity,
+            i.sellable_quantity,
+            i.version,
+            i.create_time,
+            s.sku_name,
+            s.sku_image,
+            s.pre_allocate_quantity,
+            s.status
+        FROM wms_sku_inventory i
+        INNER JOIN wms_sku_definition s ON i.sku_id = s.sku_id
+        <where>
+            <if test="query.skuName != null and query.skuName != ''">
+                AND s.sku_name LIKE CONCAT('%', #{query.skuName}, '%')
+            </if>
+            <if test="query.status != null">
+                AND s.status = #{query.status}
+            </if>
+        </where>
+        ORDER BY i.create_time DESC
+    </select>
+
+    <!-- 更新SKU库存 -->
+    <update id="updateSkuInventory">
+        UPDATE wms_sku_inventory
+        SET real_quantity = real_quantity + #{quantity},
+            sellable_quantity = sellable_quantity + #{quantity},
+            version = version + 1,
+            update_time = NOW()
+        WHERE sku_id = #{skuId} AND version = #{version}
+    </update>
+
+</mapper>

@@ -1,0 +1,165 @@
+# Tomcat
+server:
+  port: 8080
+  # 优雅关闭：等待活跃请求完成后再关闭，避免 K8s Pod 终止时数据丢失
+  shutdown: graceful
+
+spring:
+  # 导入项目根目录的 .env 文件（AI 等环境变量配置）
+  config:
+    import: optional:file:.env[.properties]
+  lifecycle:
+    # 每个关闭阶段最多等待 30 秒，留足时间给 buffer 刷盘
+    timeout-per-shutdown-phase: 30s
+  # 环境 dev|test|pro
+  profiles:
+    active: dev
+  # jackson时间格式化
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  servlet:
+    multipart:
+      maxFileSize: 104857600 #100MB
+      maxRequestSize: 104857600 #100MB
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  # ==================== Spring AI 配置 ====================
+  autoconfigure:
+    # 排除 Spring AI 自动配置，由 AiConfig 手动管理
+    exclude:
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiChatAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiEmbeddingAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiImageAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioSpeechAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiAudioTranscriptionAutoConfiguration
+      - org.springframework.ai.model.openai.autoconfigure.OpenAiModerationAutoConfiguration
+      - org.springframework.ai.vectorstore.pgvector.autoconfigure.PgVectorStoreAutoConfiguration
+      # 排除 Spring Boot 数据源自动配置，使用 MysqlDataSourceConfig 和 PostgreSqlDataSourceConfig 手动配置
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  # 数据源默认配置（profile 特定 YAML 会覆盖）
+  datasource:
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/x_springboot?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true
+      username: root
+      password: ${MYSQL_PASSWORD:}
+    pg:
+      enabled: false
+      driver-class-name: org.postgresql.Driver
+      jdbc-url: jdbc:postgresql://localhost:5432/x_springboot_ai
+      username: postgres
+      password: ${PGVECTOR_PASSWORD:}
+  ai:
+    openai:
+      # Chat 模型 - OpenAI 兼容接口（可切换 DeepSeek/ZhipuAI/Moonshot 等）
+      api-key: ${AI_CHAT_API_KEY:}
+      base-url: ${AI_CHAT_BASE_URL:https://api.deepseek.com}
+      chat:
+        enabled: true
+        options:
+          model: ${AI_CHAT_MODEL:deepseek-chat}
+          temperature: 0.7
+          max-tokens: 4096
+      # Embedding 模型配置（独立 section，可指向不同 provider）
+      embedding:
+        enabled: true
+        api-key: ${AI_EMBEDDING_API_KEY:}
+        base-url: ${AI_EMBEDDING_BASE_URL:https://api.siliconflow.cn}
+        options:
+          model: ${AI_EMBEDDING_MODEL:BAAI/bge-m3}
+# 库存模块配置
+inventory:
+  lock:
+    timeout: 30
+
+# Leaf-Snowflake分布式ID配置
+leaf:
+  snowflake:
+    datacenter-id: 0      # 数据中心ID (0-31)
+    worker-id: -1          # 工作节点ID (-1=Redis自动分配, 0-31=手动指定)
+
+swagger:
+  title: X-SpringBoot API
+  description: API 描述
+  version: 6.0.0
+  author: czx
+  url: https://github.com/yzcheng90/X-SpringBoot
+  email: object_czx@163.com
+
+springdoc:
+  api-docs:
+    enabled: false # 开启OpenApi接口
+    path: /v3/api-docs  # 自定义路径，默认为 "/v3/api-docs"
+  swagger-ui:
+    enabled: false # 开启swagger界面，依赖OpenApi，需要OpenApi同时开启
+    path: /swagger-ui/index.html # 自定义路径，默认为"/swagger-ui/index.html"
+
+# mybaits-plus配置
+mybatis-plus:
+  # MyBatis Mapper所对应的XML文件位置
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    enable-sql-runner: true
+    db-config:
+      # 主键类型 0:数据库ID自增 1.未定义 2.用户输入 3 id_worker 4.uuid 5.id_worker字符串表示
+      id-type: 0
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: 1
+      # 默认数据库表下划线命名
+      table-underline: true
+  configuration:
+    # 关闭二级缓存，避免 MybatisRedisCache 使用 Jackson 序列化 LocalDateTime 时报错
+    cache-enabled: false
+    # 使用 MyBatis-Plus 的复合枚举处理器，支持 IEnum 接口
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  # 枚举包扫描
+  type-enums-package: com.suke.czx.modules.warehouse.goods.domain.enums,com.suke.czx.modules.live.domain.enums,com.suke.czx.modules.ai.domain.enums
+
+# 直播模块配置
+live:
+  websocket:
+    # 消息投递模式
+    # single : 单实例模式，直接通过 SimpleBroker 推送（零延迟）
+    # cluster: 集群模式，通过 Redis Pub/Sub 中继到所有实例（支持多实例部署）
+    mode: single
+
+# AI 模块自定义配置
+ai:
+  knowledge:
+    # 知识库文档路径
+    base-path: ${AI_KNOWLEDGE_BASE_PATH:/Users/max/data/workSpace/max/面试}
+    # 文档分块大小（字符数）
+    chunk-size: 1000
+    # 分块重叠大小
+    chunk-overlap: 100
+    # RAG 检索 topK
+    retrieval-top-k: 5
+    # 启动时自动初始化知识库
+    auto-init: false
+  chat:
+    # 上下文窗口（保留最近 N 轮历史）
+    context-rounds: 10
+    # System Prompt 模板（支持 SpEL 变量 {retrievedChunks} {userQuestion}）
+    system-prompt: |
+      你是Java高级工程师面试辅导助手，精通Java、Spring生态、数据库、分布式系统、系统设计等领域。
+      请仅基于以下知识库内容回答问题。如果知识库中没有相关内容，请如实说明"知识库暂未收录此内容"，不要编造。
+
+      相关知识库内容（按相关度排序）：
+      ---
+      {retrievedChunks}
+      ---
+
+      请用中文回答，结构清晰，适当举例。如果涉及代码，请使用代码块展示。
+  interview:
+    # 面试题目数量
+    question-count: 10
+    # 每题追问上限
+    max-follow-ups: 3
+    # 通过分数线
+    pass-score: 7.0
+

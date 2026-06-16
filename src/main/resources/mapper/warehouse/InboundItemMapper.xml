@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.warehouse.inbound.infrastructure.repository.InboundItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suke.czx.modules.warehouse.inbound.domain.entity.InboundItem">
+        <id column="item_id" property="itemId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="batch_no" property="batchNo"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="quantity" property="quantity"/>
+        <result column="unit_cost" property="unitCost"/>
+        <result column="total_cost" property="totalCost"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 根据入库单ID查询明细列表 -->
+    <select id="selectByOrderId" resultMap="BaseResultMap">
+        SELECT *
+        FROM wms_inbound_item
+        WHERE order_id = #{orderId}
+        ORDER BY create_time ASC
+    </select>
+
+    <!-- 根据批次号查询明细列表 -->
+    <select id="selectByBatchNo" resultMap="BaseResultMap">
+        SELECT *
+        FROM wms_inbound_item
+        WHERE batch_no = #{batchNo}
+        ORDER BY create_time ASC
+    </select>
+
+</mapper>

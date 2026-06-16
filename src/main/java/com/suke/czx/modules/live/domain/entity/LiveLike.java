@@ -1,0 +1,49 @@
+package com.suke.czx.modules.live.domain.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * 直播点赞数据 - 领域实体
+ */
+@Data
+@TableName("live_like")
+@Schema(description = "直播点赞数据")
+public class LiveLike implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @TableId(type = IdType.ASSIGN_UUID)
+    @Schema(description = "点赞ID")
+    private String likeId;
+
+    @Schema(description = "任务ID")
+    private String taskId;
+
+    @Schema(description = "用户ID")
+    private String userId;
+
+    @Schema(description = "用户昵称")
+    private String userNickname;
+
+    @Schema(description = "用户头像")
+    private String userAvatar;
+
+    @Schema(description = "点赞数量")
+    private Integer likeCount;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Schema(description = "点赞时间")
+    private Date likeTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @Schema(description = "创建时间")
+    private Date createTime;
+}

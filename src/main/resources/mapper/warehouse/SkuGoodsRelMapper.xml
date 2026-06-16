@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.warehouse.combination.infrastructure.repository.SkuGoodsRelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suke.czx.modules.warehouse.combination.domain.entity.SkuGoodsRel">
+        <id column="id" property="id"/>
+        <result column="sku_id" property="skuId"/>
+        <result column="goods_id" property="goodsId"/>
+        <result column="quantity" property="quantity"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 根据SKU ID查询关联列表 -->
+    <select id="selectBySkuId" resultMap="BaseResultMap">
+        SELECT *
+        FROM wms_sku_goods_rel
+        WHERE sku_id = #{skuId}
+    </select>
+
+    <!-- 根据SKU ID删除关联 -->
+    <delete id="deleteBySkuId">
+        DELETE FROM wms_sku_goods_rel
+        WHERE sku_id = #{skuId}
+    </delete>
+
+</mapper>

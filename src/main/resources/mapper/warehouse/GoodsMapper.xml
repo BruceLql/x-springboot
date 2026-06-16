@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.suke.czx.modules.warehouse.goods.infrastructure.repository.GoodsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.suke.czx.modules.warehouse.goods.domain.entity.Goods">
+        <id column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="goods_image" property="goodsImage"/>
+        <result column="height" property="height"/>
+        <result column="weight" property="weight"/>
+        <result column="category" property="category"/>
+        <result column="product_type" property="productType"/>
+        <result column="status" property="status"/>
+        <result column="tenancy_id" property="tenancyId"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 根据供应商ID查询关联的货物列表 -->
+    <select id="selectBySupplierId" resultMap="BaseResultMap">
+        SELECT g.*
+        FROM wms_goods g
+        INNER JOIN wms_supplier_goods_rel sgr ON g.goods_id = sgr.goods_id
+        WHERE sgr.supplier_id = #{supplierId}
+          AND g.status = 1
+          AND g.tenancy_id = #{tenancyId}
+        ORDER BY g.create_time DESC
+    </select>
+
+    <!-- 查询启用的货物列表 -->
+    <select id="selectActiveGoods" resultMap="BaseResultMap">
+        SELECT *
+        FROM wms_goods
+        WHERE status = 1
+        ORDER BY create_time DESC
+    </select>
+
+</mapper>
